@@ -16,11 +16,3 @@ Six proof tiles are visible directly in the main proof section. Each tile opens 
 - YouTube MCP Server
 
 The public package contains 29 proof files. Buyer-identifying screenshots, raw n8n exports, webhook IDs, and credential references are intentionally excluded from the deployable site.
-
-## Run locally
-
-Open `index.html` directly, or serve this directory with any static web server.
-
-## Publish with GitHub Pages
-
-Push the contents of this directory to a GitHub repository, then enable Pages from the repository settings using the `main` branch and root folder.
