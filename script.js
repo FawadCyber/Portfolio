@@ -10,6 +10,36 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach((item) => observer.observe(item));
 document.querySelector('#year').textContent = new Date().getFullYear();
 
+// Showreel: the 10 MB video is only fetched once the reel scrolls near the viewport.
+// It autoplays muted; under prefers-reduced-motion it shows controls instead.
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const lazyVideo = document.querySelector('[data-lazy-video]');
+if (lazyVideo) {
+  const attachVideo = () => {
+    lazyVideo.querySelectorAll('source[data-src]').forEach((source) => {
+      source.src = source.dataset.src;
+      source.removeAttribute('data-src');
+    });
+    lazyVideo.load();
+    if (reduceMotion) {
+      lazyVideo.controls = true;
+      return;
+    }
+    lazyVideo.play().catch(() => { lazyVideo.controls = true; });
+  };
+  if ('IntersectionObserver' in window) {
+    const videoObserver = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        attachVideo();
+        videoObserver.disconnect();
+      }
+    }, { rootMargin: '600px 0px' });
+    videoObserver.observe(lazyVideo);
+  } else {
+    attachVideo();
+  }
+}
+
 const tilt = document.querySelector('[data-tilt]');
 if (tilt && window.matchMedia('(pointer:fine)').matches) {
   tilt.addEventListener('pointermove', (event) => {
