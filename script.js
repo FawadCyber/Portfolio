@@ -1,195 +1,39 @@
 (() => {
-  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
-  document.documentElement.classList.add('js');
 
-  /* ---------- Loader: word cycle, then slide up ---------- */
-  const loader = $('#loader');
-  if (loader) {
-    let seen = false;
-    try { seen = sessionStorage.getItem('loader-seen') === '1'; } catch { /* storage unavailable */ }
-    if (reduceMotion || seen) {
-      loader.remove();
-    } else {
-      document.body.classList.add('lock');
-      const word = $('.loader-word span', loader);
-      const words = ['Hello', 'Salam', 'Bonjour', 'Ciao', 'Olá', 'नमस्ते', 'Hallo', 'Hej', 'Hola'];
-      let index = 0;
-      const finish = () => {
-        loader.classList.add('done');
-        document.body.classList.remove('lock');
-        window.setTimeout(() => loader.classList.add('gone'), 1000);
-        try { sessionStorage.setItem('loader-seen', '1'); } catch { /* ignore */ }
-      };
-      const step = () => {
-        index += 1;
-        if (index < words.length) {
-          word.textContent = words[index];
-          window.setTimeout(step, 135);
-        } else {
-          finish();
-        }
-      };
-      window.setTimeout(step, 650);
-    }
-  }
+  /* Mobile menu */
+  const menuButton = $("[data-menu]");
+  const setNav = (open) => { document.body.classList.toggle("nav-open", open); menuButton?.setAttribute("aria-expanded", String(open)); };
+  menuButton?.addEventListener("click", () => setNav(!document.body.classList.contains("nav-open")));
+  $$("[data-nav-close]").forEach((el) => el.addEventListener("click", () => setNav(false)));
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape") setNav(false); });
 
-  /* ---------- Hero video: only on larger screens, never with reduced motion or data saver ---------- */
-  const heroVideo = $('[data-hero-video]');
-  const saveData = navigator.connection && navigator.connection.saveData;
-  if (heroVideo && !reduceMotion && !saveData && window.matchMedia('(min-width: 721px)').matches) {
-    $$('source[data-src]', heroVideo).forEach((source) => {
-      source.src = source.dataset.src;
-      source.removeAttribute('data-src');
-    });
-    heroVideo.autoplay = true;
-    heroVideo.load();
-    const tryPlay = () => { if (heroVideo.paused) heroVideo.play().catch(() => {}); };
-    heroVideo.addEventListener('canplay', tryPlay, { once: true });
-    document.addEventListener('visibilitychange', () => { if (!document.hidden) tryPlay(); });
-    window.addEventListener('pointerdown', tryPlay, { once: true });
-    tryPlay();
-  }
+  /* Reveal on scroll */
+  const revealItems = $$(".section-head, .card, .product, .skills, .contact-card");
+  revealItems.forEach((el) => el.classList.add("reveal"));
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver((entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0.1 });
+    revealItems.forEach((el) => io.observe(el));
+    window.setTimeout(() => revealItems.forEach((el) => { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add("in"); }), 1200);
+  } else revealItems.forEach((el) => el.classList.add("in"));
 
-  /* ---------- Scrolled state (shows the round menu button) ---------- */
-  const onScroll = () => document.body.classList.toggle('scrolled', window.scrollY > 90);
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-
-  /* ---------- Side navigation ---------- */
-  const menuButton = $('[data-menu]');
-  const sideNav = $('#side-nav');
-  const setNav = (open) => {
-    document.body.classList.toggle('nav-active', open);
-    menuButton?.setAttribute('aria-expanded', String(open));
-    menuButton?.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    sideNav?.setAttribute('aria-hidden', String(!open));
-  };
-  menuButton?.addEventListener('click', () => setNav(!document.body.classList.contains('nav-active')));
-  $$('[data-nav-close]').forEach((el) => el.addEventListener('click', () => setNav(false)));
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && document.body.classList.contains('nav-active')) setNav(false);
-  });
-
-  /* ---------- Magnetic buttons ---------- */
-  if (finePointer && !reduceMotion) {
-    $$('.magnetic').forEach((el) => {
-      el.addEventListener('pointerenter', () => { el.style.transition = 'transform .2s ease-out'; });
-      el.addEventListener('pointermove', (event) => {
-        const box = el.getBoundingClientRect();
-        const dx = event.clientX - (box.left + box.width / 2);
-        const dy = event.clientY - (box.top + box.height / 2);
-        el.style.transform = `translate(${dx * 0.32}px, ${dy * 0.32}px)`;
-      });
-      el.addEventListener('pointerleave', () => {
-        el.style.transition = 'transform .6s cubic-bezier(.2,.8,.2,1)';
-        el.style.transform = '';
-      });
-    });
-  }
-
-  /* ---------- Reveal on scroll ---------- */
-  const revealItems = $$('.reveal');
-  if ('IntersectionObserver' in window && !reduceMotion) {
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -5% 0px' });
-    revealItems.forEach((item) => revealObserver.observe(item));
-    // Fallback: anything already in or near the viewport is revealed on scroll even if the observer is slow.
-    const revealVisible = () => {
-      revealItems.forEach((item) => {
-        if (item.classList.contains('in')) return;
-        const box = item.getBoundingClientRect();
-        if (box.top < window.innerHeight * 1.1 && box.bottom > 0) item.classList.add('in');
-      });
-    };
-    window.addEventListener('scroll', revealVisible, { passive: true });
-    window.setTimeout(revealVisible, 1800);
-  } else {
-    revealItems.forEach((item) => item.classList.add('in'));
-  }
-
-  /* ---------- Work list: cursor-following preview ---------- */
-  const workList = $('.work-list');
-  const workFloat = $('.work-float');
-  const workFloatButton = $('.work-float-btn');
-  const workFloatImages = $('.work-float-images');
-  if (finePointer && !reduceMotion && workList && workFloat && workFloatButton && workFloatImages) {
-    let targetX = 0, targetY = 0, imageX = 0, imageY = 0, buttonX = 0, buttonY = 0, frame = 0;
-    const animate = () => {
-      imageX += (targetX - imageX) * 0.12;
-      imageY += (targetY - imageY) * 0.12;
-      buttonX += (targetX - buttonX) * 0.075;
-      buttonY += (targetY - buttonY) * 0.075;
-      workFloat.style.transform = `translate3d(${imageX - workFloat.offsetWidth / 2}px, ${imageY - workFloat.offsetHeight / 2}px, 0)`;
-      workFloatButton.style.transform = `translate3d(${buttonX - workFloatButton.offsetWidth / 2}px, ${buttonY - workFloatButton.offsetHeight / 2}px, 0)`;
-      frame = window.requestAnimationFrame(animate);
-    };
-    workList.addEventListener('pointermove', (event) => {
-      targetX = event.clientX;
-      targetY = event.clientY;
-      if (!frame) {
-        imageX = buttonX = targetX;
-        imageY = buttonY = targetY;
-        animate();
-      }
-    });
-    $$('.work-item', workList).forEach((item, index) => {
-      item.addEventListener('pointerenter', () => {
-        workFloatImages.style.transform = `translateY(${-index * 100}%)`;
-        workFloat.classList.add('on');
-        workFloatButton.classList.add('on');
-      });
-    });
-    workList.addEventListener('pointerleave', () => {
-      workFloat.classList.remove('on');
-      workFloatButton.classList.remove('on');
-    });
-  }
-
-  /* ---------- Footer: local time and CTA drift ---------- */
-  const timeEl = $('#local-time');
+  /* Local time */
+  const timeEl = $("#local-time");
   if (timeEl) {
-    const formatter = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Karachi', hour: '2-digit', minute: '2-digit', hour12: true });
-    const tick = () => { timeEl.textContent = `${formatter.format(new Date())} PKT`; };
-    tick();
-    window.setInterval(tick, 30000);
-  }
-  const footerCta = $('.footer-cta');
-  if (footerCta && finePointer && !reduceMotion) {
-    const drift = () => {
-      const box = footerCta.parentElement.getBoundingClientRect();
-      const progress = Math.min(1, Math.max(0, 1 - box.top / window.innerHeight));
-      footerCta.style.setProperty('--drift', `${(1 - progress) * 14}vw`);
-    };
-    window.addEventListener('scroll', drift, { passive: true });
-    drift();
+    const fmt = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Karachi", hour: "2-digit", minute: "2-digit", hour12: true });
+    const tick = () => { timeEl.textContent = fmt.format(new Date()) + " PKT"; };
+    tick(); window.setInterval(tick, 30000);
   }
 
-  /* ---------- Copy email ---------- */
-  const toast = $('.toast');
-  $$('[data-copy-email]').forEach((button) => {
-    button.addEventListener('click', async () => {
-      const email = button.dataset.copyEmail;
-      try {
-        await navigator.clipboard.writeText(email);
-        toast.textContent = 'Email copied to clipboard';
-      } catch {
-        toast.textContent = email;
-      }
-      toast.classList.add('show');
-      window.setTimeout(() => toast.classList.remove('show'), 2600);
-    });
-  });
+  /* Copy email */
+  const toast = $(".toast");
+  $$("[data-copy-email]").forEach((button) => button.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(button.dataset.copyEmail); toast.textContent = "Email copied to clipboard"; }
+    catch { toast.textContent = button.dataset.copyEmail; }
+    toast.classList.add("show"); window.setTimeout(() => toast.classList.remove("show"), 2600);
+  }));
 
-  /* ---------- Case studies ---------- */
   const fbaGallery = [
     { src: 'assets/proofs/drive-assets/fba/workflow.png', caption: 'Published n8n workflow: Odoo + three inventory sources → generated dashboard' },
     ...Array.from({ length: 13 }, (_, index) => ({
@@ -351,8 +195,6 @@
     }
     setGallery(data);
 
-    workFloat?.classList.remove('on');
-    workFloatButton?.classList.remove('on');
     if (typeof caseDialog.showModal === 'function') caseDialog.showModal();
     else caseDialog.setAttribute('open', '');
     $('.case-modal', caseDialog).scrollTop = 0;

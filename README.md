@@ -6,15 +6,13 @@ A static, dependency-free portfolio for an AI automation engineer: production n8
 
 ## Design
 
-The 2026 edition follows the editorial, motion-led style popularised by Dennis Snellenberg's portfolio: a full-height hero with a scrolling name marquee, a "located in" badge, a large statement intro with a round call-to-action, a hover-reveal work list with a cursor-following preview, a dark footer with a curved top edge, and a round menu button that opens a sliding side navigation. Everything is re-implemented from scratch in plain HTML, CSS and JavaScript with the site's own content.
+A clean, premium "systems" layout: warm off-white background, one green accent, rounded cards. Each case study is a card with a small flow diagram (for example Gmail → Parse → Odoo → Sheets) instead of a raw screenshot; the screenshots and walkthrough videos live inside the proof modal, framed in a browser-window mock. Plain HTML, CSS and JavaScript, no build step.
 
-- **Hero** — the Remotion showreel plays muted behind the marquee on screens wider than 720px; phones get the poster frame only.
-- **Recent work** — six verified workflow case studies. Hovering a row shows its proof image next to the cursor; clicking opens a modal with the architecture, system flow, evidence notes, recorded walkthrough and screenshot gallery.
+- **Hero** — headline, lede, two buttons and a four-cell stats strip.
+- **Selected systems** — six verified case cards; clicking opens the proof modal with architecture, system flow, evidence notes, recorded walkthrough and screenshot gallery.
 - **Products & platforms** — MorrowDesk, the social-media MCP server suite, FlowCore Leads and Morrow Product Engine.
-- **About** — what I do, plus the working set of tools.
-- **Contact** — email, copy-to-clipboard, GitHub, and a live local-time clock for Pakistan.
-
-Motion respects `prefers-reduced-motion`: the preloader, marquee, magnetic buttons and cursor preview are disabled for users who ask for less motion, and the preloader only shows once per browser session.
+- **How I work** — method steps plus the working set of tools.
+- **Contact** — dark card with email, copy-to-clipboard and GitHub; footer shows local time for Karachi.
 
 ## Verified workflow cases
 

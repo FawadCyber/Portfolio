@@ -5,10 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Fawad Naseem — AI Automation Engineer</title>
   <meta name="description" content="Fawad Naseem builds production AI automations: custom MCP servers, n8n systems, and the apps around them — a PostgreSQL-backed helpdesk, live reporting dashboards, and cross-platform desktop tools.">
-  <meta name="theme-color" content="#1c1d20">
+  <meta name="theme-color" content="#f4f4f1">
   <link rel="canonical" href="https://fawadcyber.github.io/Portfolio/">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Fawad Naseem">
   <meta property="og:title" content="Fawad Naseem — AI Automation Engineer">
@@ -22,293 +21,196 @@
   <meta name="twitter:title" content="Fawad Naseem — AI Automation Engineer">
   <meta name="twitter:description" content="Custom MCP servers, production n8n systems, and the apps around them. Six verified systems with recorded proof.">
   <meta name="twitter:image" content="https://fawadcyber.github.io/Portfolio/assets/remotion-preview.png">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=Inter:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   <link rel="stylesheet" href="styles.css">
-
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Fawad Naseem",
-    "jobTitle": "AI Automation Engineer",
-    "url": "https://fawadcyber.github.io/Portfolio/",
-    "sameAs": ["https://github.com/FawadCyber"],
-    "knowsAbout": ["n8n", "Model Context Protocol", "API integration", "OAuth2", "PostgreSQL", "Tauri", "Workflow automation"]
-  }
+  {"@context":"https://schema.org","@type":"Person","name":"Fawad Naseem","jobTitle":"AI Automation Engineer","url":"https://fawadcyber.github.io/Portfolio/","sameAs":["https://github.com/FawadCyber"],"knowsAbout":["n8n","Model Context Protocol","API integration","OAuth2","PostgreSQL","Tauri","Workflow automation"]}
   </script>
 </head>
 <body>
-  <div class="loader" id="loader" aria-hidden="true">
-    <p class="loader-word"><span>Hello</span></p>
-  </div>
-
   <a class="skip-link" href="#work">Skip to content</a>
 
-  <header class="hero theme-dark" id="top">
-    <div class="hero-media" aria-hidden="true">
-      <video muted loop playsinline preload="none" poster="assets/remotion-preview.png" data-hero-video>
-        <source data-src="assets/portfolio-showreel.mp4" type="video/mp4">
-      </video>
-      <div class="hero-shade"></div>
-    </div>
-
-    <nav class="topbar" aria-label="Main navigation">
-      <a class="brand" href="#top" aria-label="Fawad Naseem, home">
-        <span class="brand-copy">©</span>
-        <span class="brand-flip" aria-hidden="true"><span class="brand-line">Code by Fawad</span><span class="brand-line">Fawad Naseem</span></span>
-      </a>
-      <ul class="topbar-links">
-        <li><a href="#work">Work</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+  <header class="topbar container">
+    <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span>Fawad Naseem</a>
+    <nav class="topnav" aria-label="Main navigation">
+      <a href="#work">Work</a>
+      <a href="#products">Products</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
     </nav>
-
-    <div class="located reveal-left">
-      <span class="located-text">Located<br>in Pakistan</span>
-      <span class="globe" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18M5.5 7.5h13M5.5 16.5h13"/></svg>
-      </span>
-    </div>
-
-    <div class="hero-role">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 5l14 14M19 8v11H8"/></svg>
-      <p>AI Automation<br>Engineer</p>
-    </div>
-
-    <div class="marquee" aria-hidden="true">
-      <div class="marquee-track">
-        <span>Fawad Naseem —</span><span>Fawad Naseem —</span><span>Fawad Naseem —</span><span>Fawad Naseem —</span>
-      </div>
-    </div>
-    <h1 class="sr-only">Fawad Naseem, AI automation engineer</h1>
+    <a class="btn btn-dark" href="https://mail.google.com/mail/?view=cm&fs=1&to=fawadnaseem28%40gmail.com&su=Automation%20Project%20Inquiry" target="_blank" rel="noopener">Let’s talk</a>
+    <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu><span></span><span></span></button>
   </header>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+    <a href="#work" data-nav-close>Work</a><a href="#products" data-nav-close>Products</a><a href="#about" data-nav-close>About</a><a href="#contact" data-nav-close>Contact</a>
+  </nav>
 
-  <main>
-    <section class="intro container" aria-labelledby="intro-title">
-      <h2 id="intro-title" class="reveal">Helping businesses run on systems that keep working. Production automations, custom MCP servers, and the apps around them. No templates, always real infrastructure.</h2>
-      <div class="intro-side reveal">
-        <p>Workflow engineering, API work and product thinking in one place. I build the layer between your tools and your team, then make sure it survives contact with real data.</p>
-        <div class="btn-round-wrap"><a class="btn-round magnetic" href="#about"><span>About me</span></a></div>
+  <main id="top">
+    <section class="hero container">
+      <p class="eyebrow"><span class="dot"></span>Available for remote automation work</p>
+      <h1>I build the systems that let businesses <em>run themselves.</em></h1>
+      <p class="lede">AI automation engineer. Custom MCP servers, production n8n systems, and the apps around them: helpdesks, reporting dashboards, desktop tools, and the stubborn API integrations that templates can’t solve.</p>
+      <div class="hero-actions">
+        <a class="btn btn-dark" href="#work">See the systems</a>
+        <a class="btn btn-ghost" href="https://github.com/FawadCyber" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <dl class="stats">
+        <div><dt>6</dt><dd>Verified systems</dd></div>
+        <div><dt>4</dt><dd>MCP servers shipped</dd></div>
+        <div><dt>19</dt><dd>Tools in one MCP server</dd></div>
+        <div><dt>29</dt><dd>Public proof files</dd></div>
+      </dl>
+    </section>
+
+    <section class="section container" id="work" aria-labelledby="work-title">
+      <div class="section-head">
+        <h2 id="work-title">Selected systems</h2>
+        <p>Designed, debugged and deployed on real infrastructure. Open any card for the recorded walkthrough and proof.</p>
+      </div>
+      <div class="cards">
+        <button class="card card-dark card-wide" type="button" data-project="pinterest">
+          <div class="card-top"><span class="chip">AI infrastructure</span><span class="chip chip-live">Live</span></div>
+          <h3>Pinterest MCP Server</h3>
+          <p>A Model Context Protocol server that gives Claude and other AI clients 19 real Pinterest operations through a self-hosted n8n backend.</p>
+          <div class="flow"><span>Claude</span><i></i><span>MCP trigger</span><i></i><span>19 tools</span><i></i><span>Pinterest API</span></div>
+          <span class="card-link">Open proof ↗</span>
+        </button>
+        <button class="card" type="button" data-project="youtube-mcp">
+          <div class="card-top"><span class="chip">AI tools</span></div>
+          <h3>YouTube MCP Server</h3>
+          <p>Five focused tools: get, search, upload, update, delete. Each routes to its own sub-workflow.</p>
+          <div class="flow"><span>AI client</span><i></i><span>Router</span><i></i><span>YouTube</span></div>
+          <span class="card-link">Open proof ↗</span>
+        </button>
+        <button class="card" type="button" data-project="mp-dashboard">
+          <div class="card-top"><span class="chip">Reporting</span></div>
+          <h3>MP Executive Dashboard</h3>
+          <p>Discovers Sheets tabs, merges the data, computes KPIs and returns a full HTML dashboard from one webhook.</p>
+          <div class="flow"><span>Webhook</span><i></i><span>Sheets</span><i></i><span>Metrics</span><i></i><span>HTML</span></div>
+          <span class="card-link">Open proof ↗</span>
+        </button>
+        <button class="card" type="button" data-project="fba-dashboard">
+          <div class="card-top"><span class="chip">Inventory</span></div>
+          <h3>FACON FBA Weekly</h3>
+          <p>Odoo sales lines plus three warehouse sheets, normalised into one weekly inventory and shipment plan.</p>
+          <div class="flow"><span>Odoo</span><i></i><span>3 sheets</span><i></i><span>Model</span><i></i><span>Dashboard</span></div>
+          <span class="card-link">Open proof ↗</span>
+        </button>
+        <button class="card" type="button" data-project="odoo-orders">
+          <div class="card-top"><span class="chip">ERP</span></div>
+          <h3>Sell Bills → Odoo Orders</h3>
+          <p>Reads bill rows tab by tab, checks existing records and attributes, then creates clean sales orders.</p>
+          <div class="flow"><span>Sheets</span><i></i><span>Rules</span><i></i><span>Odoo</span></div>
+          <span class="card-link">Open proof ↗</span>
+        </button>
+        <button class="card" type="button" data-project="edesk-messages">
+          <div class="card-top"><span class="chip">Support ops</span></div>
+          <h3>Amazon Buyer Messages</h3>
+          <p>Scheduled Gmail pipeline that parses buyer emails, enriches them from Odoo and keeps a deduplicated sheet.</p>
+          <div class="flow"><span>Gmail</span><i></i><span>Parse</span><i></i><span>Odoo</span><i></i><span>Sheets</span></div>
+          <span class="card-link">Open proof ↗</span>
+        </button>
       </div>
     </section>
 
-    <section class="work container" id="work" aria-labelledby="work-title">
-      <p class="label" id="work-title">Recent work</p>
-      <ul class="work-list">
-        <li class="work-item">
-          <button type="button" data-project="pinterest">
-            <img class="work-thumb" src="assets/proofs/pinterest-mcp-server.jpg" alt="" loading="lazy" decoding="async">
-            <span class="work-name">Pinterest MCP Server</span>
-            <span class="work-cat">MCP &amp; n8n</span>
-          </button>
-        </li>
-        <li class="work-item">
-          <button type="button" data-project="mp-dashboard">
-            <img class="work-thumb" src="assets/proofs/mp-executive-dashboard.jpg" alt="" loading="lazy" decoding="async">
-            <span class="work-name">MP Executive Dashboard</span>
-            <span class="work-cat">Reporting &amp; Webhooks</span>
-          </button>
-        </li>
-        <li class="work-item">
-          <button type="button" data-project="fba-dashboard">
-            <img class="work-thumb" src="assets/proofs/facon-fba-weekly-dashboard.jpg" alt="" loading="lazy" decoding="async">
-            <span class="work-name">FACON FBA Weekly</span>
-            <span class="work-cat">Inventory &amp; Odoo</span>
-          </button>
-        </li>
-        <li class="work-item">
-          <button type="button" data-project="odoo-orders">
-            <img class="work-thumb" src="assets/proofs/sell-bills-to-odoo-orders.jpg" alt="" loading="lazy" decoding="async">
-            <span class="work-name">Sell Bills → Odoo</span>
-            <span class="work-cat">ERP Automation</span>
-          </button>
-        </li>
-        <li class="work-item">
-          <button type="button" data-project="edesk-messages">
-            <img class="work-thumb" src="assets/proofs/drive-assets/edesk/workflow.jpg" alt="" loading="lazy" decoding="async">
-            <span class="work-name">Amazon Buyer Messages</span>
-            <span class="work-cat">Support Operations</span>
-          </button>
-        </li>
-        <li class="work-item">
-          <button type="button" data-project="youtube-mcp">
-            <img class="work-thumb" src="assets/proofs/drive-assets/youtube/workflow.png" alt="" loading="lazy" decoding="async">
-            <span class="work-name">YouTube MCP Server</span>
-            <span class="work-cat">AI Tools</span>
-          </button>
-        </li>
-      </ul>
-      <div class="center-btn reveal">
-        <a class="btn-pill magnetic" href="#products">More work <sup>4</sup></a>
+    <section class="section container" id="products" aria-labelledby="products-title">
+      <div class="section-head">
+        <h2 id="products-title">Products &amp; platforms</h2>
+        <p>Larger systems built and maintained around the automations.</p>
       </div>
-    </section>
-
-    <div class="work-float" aria-hidden="true">
-      <div class="work-float-inner">
-        <div class="work-float-images">
-          <img src="assets/proofs/pinterest-mcp-server.jpg" alt="" loading="lazy" decoding="async">
-          <img src="assets/proofs/mp-executive-dashboard.jpg" alt="" loading="lazy" decoding="async">
-          <img src="assets/proofs/facon-fba-weekly-dashboard.jpg" alt="" loading="lazy" decoding="async">
-          <img src="assets/proofs/sell-bills-to-odoo-orders.jpg" alt="" loading="lazy" decoding="async">
-          <img src="assets/proofs/drive-assets/edesk/workflow.jpg" alt="" loading="lazy" decoding="async">
-          <img src="assets/proofs/drive-assets/youtube/workflow.png" alt="" loading="lazy" decoding="async">
-        </div>
-      </div>
-    </div>
-    <div class="work-float-btn" aria-hidden="true"><span>Open</span></div>
-
-    <section class="products container" id="products" aria-labelledby="products-title">
-      <p class="label" id="products-title">Products &amp; platforms</p>
-      <ol class="num-list">
-        <li class="reveal">
+      <div class="products">
+        <article class="product">
           <span class="num">01</span>
-          <div>
-            <h3>MorrowDesk</h3>
-            <p>Customer-support platform for Facon built on n8n workflows, PostgreSQL and a Next.js frontend. Authentication, role-based access control, admin tooling, and SMTP/IMAP email processing with MIME and inline-image handling, plus a Tauri v2 desktop shell.</p>
-            <ul class="tags" aria-label="Technologies used"><li>n8n</li><li>PostgreSQL</li><li>Next.js</li><li>RBAC</li><li>SMTP / IMAP</li><li>Tauri v2</li></ul>
-          </div>
-        </li>
-        <li class="reveal">
+          <h3>MorrowDesk</h3>
+          <p>Customer-support platform for Facon on n8n, PostgreSQL and Next.js: auth, role-based access, admin tooling, SMTP/IMAP email with MIME handling, plus a Tauri v2 desktop shell.</p>
+          <ul class="tags"><li>n8n</li><li>PostgreSQL</li><li>Next.js</li><li>RBAC</li><li>Tauri v2</li></ul>
+        </article>
+        <article class="product">
           <span class="num">02</span>
-          <div>
-            <h3>Social Media MCP Servers</h3>
-            <p>Model Context Protocol servers that give AI agents real operations on YouTube, Instagram, Facebook and Pinterest: search, publish, update and manage content through authenticated, self-hosted n8n endpoints.</p>
-            <ul class="tags" aria-label="Technologies used"><li>MCP</li><li>n8n</li><li>OAuth2</li><li>YouTube</li><li>Instagram</li><li>Facebook</li><li>Pinterest</li></ul>
-          </div>
-        </li>
-        <li class="reveal">
+          <h3>Social Media MCP Servers</h3>
+          <p>MCP servers for YouTube, Instagram, Facebook and Pinterest so AI agents can search, publish and manage content through authenticated n8n endpoints.</p>
+          <ul class="tags"><li>MCP</li><li>n8n</li><li>OAuth2</li></ul>
+        </article>
+        <article class="product">
           <span class="num">03</span>
-          <div>
-            <h3>FlowCore Leads</h3>
-            <p>Google Maps lead-finder dashboard shipped from a single codebase as a hosted web app, Windows, macOS and Linux installers, and an Android APK. Tauri 2 builds every target in GitHub Actions and attaches the installers to one release.</p>
-            <ul class="tags" aria-label="Technologies used"><li>Tauri 2</li><li>Rust</li><li>GitHub Actions</li><li>Android</li><li>Windows</li></ul>
-          </div>
-        </li>
-        <li class="reveal">
+          <h3>FlowCore Leads</h3>
+          <p>Google Maps lead-finder shipped from one codebase as a web app, Windows, macOS and Linux installers and an Android APK, built by Tauri 2 in GitHub Actions.</p>
+          <ul class="tags"><li>Tauri 2</li><li>Rust</li><li>GitHub Actions</li><li>Android</li></ul>
+        </article>
+        <article class="product">
           <span class="num">04</span>
-          <div>
-            <h3>Morrow Product Engine</h3>
-            <p>Product research, listing preparation and AI-assisted content generation workflows that feed Facon’s Amazon catalog. Works alongside the Master FBA Agent, a multi-workflow inventory and shipment automation system, and the buyer-message pipeline above.</p>
-            <ul class="tags" aria-label="Technologies used"><li>n8n</li><li>OpenAI</li><li>Amazon</li><li>Google Sheets</li><li>JavaScript</li></ul>
-          </div>
-        </li>
-      </ol>
+          <h3>Morrow Product Engine</h3>
+          <p>Product research, listing preparation and AI-assisted content workflows feeding Facon’s Amazon catalog, alongside the Master FBA Agent.</p>
+          <ul class="tags"><li>n8n</li><li>OpenAI</li><li>Amazon</li><li>Sheets</li></ul>
+        </article>
+      </div>
     </section>
 
-    <section class="about container" id="about" aria-labelledby="about-title">
-      <div class="about-copy reveal">
-        <p class="label">About</p>
-        <h2 id="about-title">Curiosity is good.<br>Shipping is better.</h2>
-        <p>I’m Fawad, a self-taught automation engineer who likes the work hiding beneath polished interfaces: authentication flows, awkward payloads, undocumented limits, and systems that need to stay useful after the demo.</p>
-        <p>My recent focus is reusable AI infrastructure, especially MCP servers that give assistants safe, practical access to external services, and the production apps that sit on top of it: a PostgreSQL-backed helpdesk, webhook-served dashboards, and desktop builds with Tauri.</p>
-      </div>
-      <div class="about-side reveal">
-        <ol class="services">
-          <li><span class="num">01</span><div><h3>Automation systems</h3><p>End-to-end n8n workflows with validation, error paths and monitoring, running on self-hosted infrastructure.</p></div></li>
-          <li><span class="num">02</span><div><h3>MCP servers &amp; AI tools</h3><p>Model Context Protocol servers that turn an API into a safe, callable toolset for Claude and other AI clients.</p></div></li>
-          <li><span class="num">03</span><div><h3>The apps around them</h3><p>Helpdesks, reporting dashboards and desktop builds that give the automation a face your team can use.</p></div></li>
+    <section class="section container about" id="about" aria-labelledby="about-title">
+      <div>
+        <h2 id="about-title">How I work</h2>
+        <p>I’m Fawad, a self-taught automation engineer who likes the work beneath polished interfaces: authentication flows, awkward payloads, undocumented limits, and systems that stay useful after the demo.</p>
+        <ol class="method">
+          <li><b>Trace the real process.</b> Inputs, edge cases, ownership and failure points before choosing nodes.</li>
+          <li><b>Work at the API layer.</b> Raw responses, auth and scopes, then the integration the platform actually needs.</li>
+          <li><b>Design for failure.</b> Validation, useful error paths, modular sub-workflows, debuggable transforms.</li>
+          <li><b>Deploy and verify.</b> Hosted infrastructure, real clients, refine until the loop is dependable.</li>
         </ol>
-        <div class="skills">
-          <div class="skill-row"><span>Automation</span><b>n8n · Make · Zapier</b></div>
-          <div class="skill-row"><span>AI</span><b>OpenAI · Claude · MCP servers</b></div>
-          <div class="skill-row"><span>Integration</span><b>REST · Webhooks · OAuth2 · GraphQL</b></div>
-          <div class="skill-row"><span>Code</span><b>JavaScript · Python · Next.js · Tauri</b></div>
-          <div class="skill-row"><span>Data</span><b>PostgreSQL · MongoDB · Sheets · Airtable</b></div>
-          <div class="skill-row"><span>Infra</span><b>Docker · Linux · VPS · GitHub Actions</b></div>
+      </div>
+      <div class="skills">
+        <div class="skill-row"><span>Automation</span><b>n8n · Make · Zapier</b></div>
+        <div class="skill-row"><span>AI</span><b>OpenAI · Claude · MCP servers</b></div>
+        <div class="skill-row"><span>Integration</span><b>REST · Webhooks · OAuth2 · GraphQL</b></div>
+        <div class="skill-row"><span>Code</span><b>JavaScript · Python · Next.js · Tauri</b></div>
+        <div class="skill-row"><span>Data</span><b>PostgreSQL · MongoDB · Sheets · Airtable</b></div>
+        <div class="skill-row"><span>Infra</span><b>Docker · Linux · VPS · GitHub Actions</b></div>
+      </div>
+    </section>
+
+    <section class="section container" id="contact">
+      <div class="contact-card">
+        <p class="eyebrow light">Have a process that should run itself?</p>
+        <h2>Let’s make it actually work.</h2>
+        <div class="hero-actions">
+          <a class="btn btn-light" href="https://mail.google.com/mail/?view=cm&fs=1&to=fawadnaseem28%40gmail.com&su=Automation%20Project%20Inquiry" target="_blank" rel="noopener">Email me</a>
+          <button class="btn btn-outline" type="button" data-copy-email="fawadnaseem28@gmail.com">Copy email</button>
+          <a class="btn btn-outline" href="https://github.com/FawadCyber" target="_blank" rel="noopener">GitHub ↗</a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer theme-dark" id="contact">
-    <div class="footer-inner container">
-      <h2 class="footer-title reveal"><span class="avatar" aria-hidden="true"><img src="favicon.svg" alt=""></span>Let’s work<br>together</h2>
-      <div class="footer-line">
-        <span class="stripe"></span>
-        <div class="footer-cta"><a class="btn-round btn-blue magnetic" href="https://mail.google.com/mail/?view=cm&fs=1&to=fawadnaseem28%40gmail.com&su=Automation%20Project%20Inquiry" target="_blank" rel="noopener"><span>Get in touch</span></a></div>
-      </div>
-      <div class="footer-pills">
-        <a class="btn-pill magnetic" href="mailto:fawadnaseem28@gmail.com">fawadnaseem28@gmail.com</a>
-        <button class="btn-pill magnetic" type="button" data-copy-email="fawadnaseem28@gmail.com">Copy email</button>
-        <a class="btn-pill magnetic" href="https://github.com/FawadCyber" target="_blank" rel="noopener">github.com/FawadCyber</a>
-      </div>
-      <div class="footer-meta">
-        <div class="footer-meta-group">
-          <div><small>Version</small><span>2026 © Edition</span></div>
-          <div><small>Local time</small><span id="local-time">--:-- PKT</span></div>
-        </div>
-        <div>
-          <small>Socials</small>
-          <ul>
-            <li><a href="https://github.com/FawadCyber" target="_blank" rel="noopener">GitHub</a></li>
-            <li><a href="mailto:fawadnaseem28@gmail.com">Email</a></li>
-            <li><a href="https://github.com/FawadCyber/Portfolio" target="_blank" rel="noopener">Source</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
+  <footer class="container footer">
+    <span>© 2026 Fawad Naseem</span>
+    <span>Karachi, Pakistan · <span id="local-time"></span></span>
+    <a href="#top">Back to top ↑</a>
   </footer>
-
-  <div class="menu-wrap">
-    <button class="menu-btn magnetic" type="button" aria-label="Open menu" aria-controls="side-nav" aria-expanded="false" data-menu>
-      <span class="bars" aria-hidden="true"></span>
-    </button>
-  </div>
-  <div class="nav-back" data-nav-close aria-hidden="true"></div>
-  <aside class="side-nav theme-dark" id="side-nav" aria-hidden="true" aria-label="Site menu">
-    <div class="side-nav-curve" aria-hidden="true"></div>
-    <div class="side-nav-inner">
-      <div>
-        <p class="label">Navigation</p>
-        <span class="stripe"></span>
-        <ul class="side-links">
-          <li><a href="#top" data-nav-close>Home</a></li>
-          <li><a href="#work" data-nav-close>Work</a></li>
-          <li><a href="#about" data-nav-close>About</a></li>
-          <li><a href="#contact" data-nav-close>Contact</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="label">Socials</p>
-        <ul class="side-socials">
-          <li><a href="https://github.com/FawadCyber" target="_blank" rel="noopener">GitHub</a></li>
-          <li><a href="mailto:fawadnaseem28@gmail.com">Email</a></li>
-          <li><a href="https://fawadcyber.github.io/FlowCore/" target="_blank" rel="noopener">FlowCore</a></li>
-        </ul>
-      </div>
-    </div>
-  </aside>
 
   <dialog class="case-dialog" id="case-dialog" aria-labelledby="case-title">
     <div class="case-modal">
       <button class="case-close" type="button" data-case-close aria-label="Close case study">×</button>
-      <div class="case-modal-heading">
-        <p class="label" id="case-kicker"></p>
-        <h2 id="case-title"></h2>
-        <p id="case-summary"></p>
-        <ul class="tags" id="case-tags"></ul>
-        <a class="case-export" id="case-export" download hidden>Download sanitized n8n workflow export ↓</a>
-      </div>
-      <div class="case-video-shell" id="case-video-shell">
-        <div class="proof-toolbar"><p id="case-video-label"></p><b>Video proof</b></div>
+      <p class="eyebrow" id="case-kicker"></p>
+      <h2 id="case-title"></h2>
+      <p class="case-summary" id="case-summary"></p>
+      <ul class="tags" id="case-tags"></ul>
+      <a class="case-export" id="case-export" download hidden>Download sanitized n8n workflow export ↓</a>
+      <div class="frame" id="case-video-shell">
+        <div class="frame-bar"><i></i><i></i><i></i><span id="case-video-label"></span></div>
         <video id="case-video" controls preload="metadata" playsinline></video>
       </div>
       <div class="case-details">
-        <section><p class="label">System flow</p><ol id="case-steps"></ol></section>
-        <section><p class="label">What this proves</p><ul id="case-evidence"></ul></section>
+        <section><h4>System flow</h4><ol id="case-steps"></ol></section>
+        <section><h4>What this proves</h4><ul id="case-evidence"></ul></section>
       </div>
-      <figure class="case-extra" id="case-extra" hidden><img id="case-extra-image" alt=""><figcaption id="case-extra-caption"></figcaption></figure>
+      <figure class="frame case-extra" id="case-extra" hidden><div class="frame-bar"><i></i><i></i><i></i><span id="case-extra-caption"></span></div><img id="case-extra-image" alt=""></figure>
       <section class="case-gallery" id="case-gallery" hidden>
-        <div class="case-gallery-heading"><p class="label">Supporting proof</p><span id="case-gallery-count"></span></div>
+        <div class="case-gallery-heading"><h4>Supporting proof</h4><span id="case-gallery-count"></span></div>
         <div class="case-gallery-grid" id="case-gallery-grid"></div>
       </section>
     </div>
   </dialog>
-
   <div class="toast" role="status" aria-live="polite"></div>
   <script src="script.js"></script>
 </body>
