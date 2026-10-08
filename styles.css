@@ -118,6 +118,15 @@ h2 { font: 600 clamp(1.9rem, 3.4vw, 2.9rem)/1.05 var(--display); letter-spacing:
 .contact-card { padding: clamp(2.5rem, 6vw, 5rem); border-radius: calc(var(--radius) + 6px); background: var(--dark); color: #fff; text-align: center; }
 .contact-card h2 { margin: .5em auto .2em; max-width: 16ch; font-size: clamp(2.2rem, 5vw, 4rem); }
 .contact-card .hero-actions { justify-content: center; }
+.btn-wa { background: #25d366; color: #0b2b17; }
+.btn-wa:hover { background: #3ee07a; }
+.contact-meta { margin-top: 1.6em; color: #9a9ca3; font-size: .9em; }
+.socials { display: flex; justify-content: center; gap: .6em; margin-top: 1.2em; }
+.social { display: grid; place-items: center; width: 2.6em; height: 2.6em; border-radius: 50%; color: #cfd1d7; box-shadow: inset 0 0 0 1px rgba(255,255,255,.18); transition: color .25s, background .25s, transform .25s; }
+.social:hover { color: #fff; background: rgba(255,255,255,.1); transform: translateY(-2px); }
+.social svg { width: 1.1em; height: 1.1em; }
+.footer-links { display: flex; gap: 1.4em; }
+.footer-links a:hover { color: var(--ink); }
 .footer { display: flex; justify-content: space-between; gap: 1.5em; padding: 2em 0 2.5em; color: var(--muted); font-size: .85em; }
 
 .case-dialog { width: min(1100px, calc(100vw - 32px)); max-width: none; max-height: 92vh; margin: auto; padding: 0; border: 0; border-radius: var(--radius); background: var(--surface); color: var(--ink); box-shadow: 0 40px 100px rgba(0,0,0,.35); }
@@ -177,6 +186,8 @@ html:has(.case-dialog[open]) { overflow: hidden; }
   .card { min-height: auto; }
   .section-head { flex-direction: column; align-items: flex-start; }
   .footer { flex-direction: column; }
+  .contact-meta .sep { display: none; }
+  .contact-meta span { display: block; }
   .case-details, .case-gallery-grid { grid-template-columns: 1fr; }
   .case-dialog { width: calc(100vw - 16px); }
 }
