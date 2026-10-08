@@ -68,7 +68,7 @@ h2 { font: 600 clamp(1.9rem, 3.4vw, 2.9rem)/1.05 var(--display); letter-spacing:
 .card:hover { transform: translateY(-4px); box-shadow: 0 0 0 1px var(--line), 0 24px 50px -24px rgba(20,21,23,.25); }
 .card-wide { grid-column: span 2; }
 .card-dark { background: var(--dark); color: #fff; box-shadow: none; }
-.card-dark p { color: #b8bac1; }
+.card.card-dark p { color: #b8bac1; }
 .card-top { display: flex; gap: .5em; }
 .chip { font: 500 .72em var(--mono); padding: .4em .8em; border-radius: 999px; background: var(--bg); color: var(--ink-2); }
 .card-dark .chip { background: #26282d; color: #cfd1d7; }
