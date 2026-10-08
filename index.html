@@ -8,6 +8,7 @@
   <meta name="theme-color" content="#f4f4f1">
   <link rel="canonical" href="https://fawadcyber.github.io/Portfolio/">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="favicon.svg">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Fawad Naseem">
   <meta property="og:title" content="Fawad Naseem — AI Automation Engineer">
@@ -33,10 +34,11 @@
   <a class="skip-link" href="#work">Skip to content</a>
 
   <header class="topbar container">
-    <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span>Fawad Naseem</a>
+    <a class="brand" href="#top"><img class="brand-mark" src="favicon.svg" alt="" width="26" height="26">Fawad Naseem</a>
     <nav class="topnav" aria-label="Main navigation">
       <a href="#work">Work</a>
       <a href="#products">Products</a>
+      <a href="#github">GitHub</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -44,7 +46,7 @@
     <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu><span></span><span></span></button>
   </header>
   <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
-    <a href="#work" data-nav-close>Work</a><a href="#products" data-nav-close>Products</a><a href="#about" data-nav-close>About</a><a href="#contact" data-nav-close>Contact</a>
+    <a href="#work" data-nav-close>Work</a><a href="#products" data-nav-close>Products</a><a href="#github" data-nav-close>GitHub</a><a href="#about" data-nav-close>About</a><a href="#contact" data-nav-close>Contact</a>
   </nav>
 
   <main id="top">
@@ -146,6 +148,17 @@
           <ul class="tags"><li>n8n</li><li>OpenAI</li><li>Amazon</li><li>Sheets</li></ul>
         </article>
       </div>
+    </section>
+
+    <section class="section container" id="github" aria-labelledby="github-title">
+      <div class="section-head">
+        <h2 id="github-title">Latest on GitHub</h2>
+        <p>Pulled live from my public repositories, newest first. Push a project and it shows up here.</p>
+      </div>
+      <div class="repos" id="repos" aria-live="polite">
+        <p class="repos-status">Loading repositories…</p>
+      </div>
+      <a class="btn btn-ghost repos-more" href="https://github.com/FawadCyber?tab=repositories" target="_blank" rel="noopener">All repositories ↗</a>
     </section>
 
     <section class="section container about" id="about" aria-labelledby="about-title">

@@ -18,6 +18,56 @@
     window.setTimeout(() => revealItems.forEach((el) => { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add("in"); }), 1200);
   } else revealItems.forEach((el) => el.classList.add("in"));
 
+  /* Latest on GitHub: public, non-fork, non-archived repos, newest push first.
+     To hide a repo, add the topic "hide-from-portfolio" to it on GitHub. */
+  const reposEl = $("#repos");
+  if (reposEl) {
+    const USER = "FawadCyber";
+    const SKIP = new Set(["portfolio", USER.toLowerCase()]);
+    const LANG = { JavaScript: "#f1e05a", TypeScript: "#3178c6", Python: "#3572A5", HTML: "#e34c26", CSS: "#563d7c", Rust: "#dea584", Go: "#00ADD8", Shell: "#89e051", Java: "#b07219", PHP: "#4F5D95", Vue: "#41b883", Dart: "#00B4AB", Kotlin: "#A97BFF", Swift: "#F05138" };
+    const ago = (iso) => {
+      const days = Math.floor((Date.now() - new Date(iso)) / 864e5);
+      if (days < 1) return "today";
+      if (days < 30) return days + "d ago";
+      if (days < 365) return Math.floor(days / 30) + "mo ago";
+      return Math.floor(days / 365) + "y ago";
+    };
+    const pretty = (name) => name.replace(/[-_]+/g, " ").replace(/\b\w/g, (m) => m.toUpperCase());
+    const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+    const link = (text, href) => { const a = el("a", "", text); a.href = href; a.target = "_blank"; a.rel = "noopener"; return a; };
+    const render = (repos) => {
+      const list = repos.filter((r) => !r.fork && !r.archived && !SKIP.has(r.name.toLowerCase()) && !(r.topics || []).includes("hide-from-portfolio")).slice(0, 9);
+      if (!list.length) { reposEl.replaceChildren(el("p", "repos-status", "No public repositories yet.")); return; }
+      reposEl.replaceChildren(...list.map((r) => {
+        const card = el("article", "repo");
+        const top = el("div", "repo-top");
+        top.append(el("span", "", r.name), el("span", "", "Updated " + ago(r.pushed_at)));
+        card.append(top, el("h3", "", pretty(r.name)), el("p", "", r.description || "No description yet."));
+        const meta = el("div", "repo-meta");
+        if (r.language) { const l = el("span"); const d = el("i", "lang-dot"); d.style.background = LANG[r.language] || "#8a8c93"; l.append(d, r.language); meta.append(l); }
+        if (r.stargazers_count) meta.append(el("span", "", "★ " + r.stargazers_count));
+        const links = el("div", "repo-links");
+        links.append(link("Code ↗", r.html_url));
+        if (r.homepage) links.append(link("Live ↗", r.homepage));
+        meta.append(links);
+        card.append(meta);
+        return card;
+      }));
+    };
+    const KEY = "gh-repos-v1";
+    let cached = null;
+    try { cached = JSON.parse(sessionStorage.getItem(KEY) || "null"); } catch (e) { cached = null; }
+    if (cached && Date.now() - cached.t < 10 * 60 * 1000) render(cached.data);
+    else fetch("https://api.github.com/users/" + USER + "/repos?sort=pushed&per_page=100", { headers: { Accept: "application/vnd.github+json" } })
+      .then((res) => { if (!res.ok) throw new Error(String(res.status)); return res.json(); })
+      .then((data) => { render(data); try { sessionStorage.setItem(KEY, JSON.stringify({ t: Date.now(), data })); } catch (e) { /* ignore */ } })
+      .catch(() => {
+        const p = el("p", "repos-status", "Couldn't load repositories right now. ");
+        p.append(link("View them on GitHub ↗", "https://github.com/" + USER + "?tab=repositories"));
+        reposEl.replaceChildren(p);
+      });
+  }
+
   /* Local time */
   const timeEl = $("#local-time");
   if (timeEl) {
