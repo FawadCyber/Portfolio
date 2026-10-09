@@ -44,7 +44,7 @@ h1, h2, h3, h4, p { margin: 0; }
 .menu-toggle span { width: 16px; height: 1.5px; background: var(--ink); transition: transform .3s; }
 .mobile-nav { display: none; }
 
-.hero { padding: clamp(4rem, 10vw, 8rem) 0 clamp(3rem, 7vw, 5rem); }
+.hero { padding: clamp(1.5rem, 3.5vw, 3rem) 0 clamp(3rem, 7vw, 5rem); }
 .eyebrow { display: inline-flex; align-items: center; gap: .6em; font: 500 .8em var(--mono); letter-spacing: .02em; color: var(--accent); text-transform: uppercase; }
 .eyebrow.light { color: #9ad4b6; }
 .dot { width: .55em; height: .55em; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 rgba(31,111,74,.5); animation: pulse 2.2s infinite; }
