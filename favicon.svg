@@ -1,13 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#2a8a5e"/>
-      <stop offset="1" stop-color="#14523a"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1a1a1c"/>
+      <stop offset="1" stop-color="#0b0b0c"/>
+    </linearGradient>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F6E3B4"/>
+      <stop offset="0.35" stop-color="#D9B26F"/>
+      <stop offset="0.6" stop-color="#B8894A"/>
+      <stop offset="0.82" stop-color="#E6C98F"/>
+      <stop offset="1" stop-color="#8E6431"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#C79B5C"/>
+      <stop offset="0.4" stop-color="#F1DCA8"/>
+      <stop offset="0.7" stop-color="#B5874A"/>
+      <stop offset="1" stop-color="#7A5226"/>
     </linearGradient>
   </defs>
-  <rect width="64" height="64" rx="16" fill="url(#g)"/>
-  <rect x="1" y="1" width="62" height="62" rx="15" fill="none" stroke="#ffffff" stroke-opacity=".14"/>
-  <path d="M22 46V18h21" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M22 32h13" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
-  <circle cx="44" cy="44" r="5" fill="#b9f2d3"/>
+  <rect width="64" height="64" rx="16" fill="url(#bg)"/>
+  <rect x="1" y="1" width="62" height="62" rx="15" fill="none" stroke="#D9B26F" stroke-opacity=".22"/>
+  <g transform="translate(6.7 6.6) scale(0.0262)">
+    <path d="M130 262 L855 830 L630 738 L830 1080 L435 770 Z" fill="url(#g1)"/>
+    <path d="M322 752 L860 1120 Q935 1200 965 1340 L965 1690 L800 1385 Q640 1150 435 985 Z" fill="url(#g2)"/>
+    <g transform="translate(1930 0) scale(-1 1)">
+      <path d="M130 262 L855 830 L630 738 L830 1080 L435 770 Z" fill="url(#g1)"/>
+      <path d="M322 752 L860 1120 Q935 1200 965 1340 L965 1690 L800 1385 Q640 1150 435 985 Z" fill="url(#g2)"/>
+    </g>
+  </g>
 </svg>
