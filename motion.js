@@ -9,6 +9,18 @@ const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const spring = { type: "spring", stiffness: 260, damping: 26 };
 
+/* Hero video: loads after first paint, phones get the 720p file, skipped for reduced motion or data saver. */
+const hv = $("[data-hero-video]");
+const saveData = navigator.connection && navigator.connection.saveData;
+if (hv && !reduce && !saveData) {
+  const src = $("source", hv);
+  src.src = window.matchMedia("(max-width: 720px)").matches ? src.dataset.srcMobile : src.dataset.srcDesktop;
+  hv.load();
+  const play = () => hv.play().catch(() => {});
+  hv.addEventListener("canplay", play, { once: true });
+  new IntersectionObserver(([e]) => { if (e.isIntersecting) play(); else hv.pause(); }).observe(hv);
+}
+
 /* Scroll progress bar */
 const bar = $(".progress");
 if (bar && !reduce) scroll(animate(bar, { scaleX: [0, 1] }, { ease: "linear" }));
