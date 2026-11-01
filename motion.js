@@ -5,7 +5,7 @@ import { animate, inView, scroll, stagger } from "https://cdn.jsdelivr.net/npm/m
 
 const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-const lite = window.matchMedia("(hover: none), (pointer: coarse), (max-width: 900px)").matches || (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4;
+const lite = window.matchMedia("(hover: none) and (pointer: coarse), (max-width: 760px)").matches; // phones and tablets only
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const spring = { type: "spring", stiffness: 260, damping: 26 };

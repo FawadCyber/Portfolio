@@ -9,7 +9,7 @@ const canvas = document.getElementById("world");
 const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const small = window.matchMedia("(max-width: 720px)").matches;
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-const lite = window.matchMedia("(hover: none), (pointer: coarse), (max-width: 900px)").matches || (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4;
+const lite = window.matchMedia("(hover: none) and (pointer: coarse), (max-width: 760px)").matches; // phones and tablets only
 
 function webglOK() {
   try { const c = document.createElement("canvas"); return !!(c.getContext("webgl2") || c.getContext("webgl")); } catch { return false; }
@@ -20,7 +20,8 @@ function init() {
   const N = lite ? 900 : 6500;
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: true, powerPreference: "high-performance" });
   const dpr = Math.min(window.devicePixelRatio || 1, lite ? 1 : 1.6);
-  renderer.setPixelRatio(dpr);
+  let pixelRatio = dpr, perfAcc = 0, perfN = 0;
+  renderer.setPixelRatio(pixelRatio);
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
   camera.position.set(0, 0, 14);
@@ -123,6 +124,7 @@ function init() {
   function resize() {
     const w = window.innerWidth, h = window.innerHeight;
     renderer.setSize(w, h, false);
+    mat.uniforms.uPixelRatio.value = renderer.getPixelRatio();
     camera.aspect = w / h;
     camera.position.z = 14;
     group.scale.setScalar(Math.min(1, (w / h) / 0.95)); // fit narrow screens
@@ -174,6 +176,12 @@ function init() {
       if (now - last < 32 || heroBottom > window.innerHeight * 0.5) { raf = requestAnimationFrame(frame); if (now - last >= 32) last = now; return; }
     }
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    // Adaptive quality: every ~1.5s, if the average frame is slower than ~45fps, render at a lower resolution.
+    perfAcc += dt; perfN++;
+    if (perfN >= 90) {
+      const avg = perfAcc / perfN; perfAcc = 0; perfN = 0;
+      if (avg > 1 / 45 && pixelRatio > 1) { pixelRatio = Math.max(1, pixelRatio - 0.25); renderer.setPixelRatio(pixelRatio); resize(); }
+    }
     if (!reduce) time += dt;
 
     const f = formationIndex();

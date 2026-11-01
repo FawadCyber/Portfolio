@@ -10,7 +10,7 @@ const canvas = document.getElementById("v3d");
 const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const small = window.matchMedia("(max-width: 720px)").matches;
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-const lite = window.matchMedia("(hover: none), (pointer: coarse), (max-width: 900px)").matches || (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4;
+const lite = window.matchMedia("(hover: none) and (pointer: coarse), (max-width: 760px)").matches; // phones and tablets only
 
 function webglOK() {
   try { const c = document.createElement("canvas"); return !!(c.getContext("webgl2") || c.getContext("webgl")); } catch { return false; }
@@ -20,7 +20,8 @@ if (host && canvas && webglOK()) init();
 
 function init() {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: !small, alpha: true, powerPreference: "high-performance" });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lite ? 1.25 : 1.75));
+  let pixelRatio = Math.min(window.devicePixelRatio || 1, lite ? 1.25 : 1.75), perfAcc = 0, perfN = 0;
+  renderer.setPixelRatio(pixelRatio);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
@@ -123,6 +124,12 @@ function init() {
     if (!running) return;
     if (lite && now - last < 32) { if (visible) raf = requestAnimationFrame(frame); return; } // ~30 fps on phones
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    // Adaptive quality: every ~1.5s, if the average frame is slower than ~45fps, render at a lower resolution.
+    perfAcc += dt; perfN++;
+    if (perfN >= 90) {
+      const avg = perfAcc / perfN; perfAcc = 0; perfN = 0;
+      if (avg > 1 / 45 && pixelRatio > 1) { pixelRatio = Math.max(1, pixelRatio - 0.25); renderer.setPixelRatio(pixelRatio); resize(); }
+    }
     const t = (now - t0) / 1000;
     const intro = reduce ? 1 : ease(Math.min(1, t / 1.8));
     halves[0].position.x = (1 - intro) * -900; halves[1].position.x = (1 - intro) * 900;
