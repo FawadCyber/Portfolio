@@ -8,7 +8,7 @@ A static, dependency-free portfolio for an AI automation engineer: production n8
 
 A clean, premium "systems" layout: warm off-white background, one green accent, rounded cards. Each case study is a card with a small flow diagram (for example Gmail → Parse → Odoo → Sheets) instead of a raw screenshot; the screenshots and walkthrough videos live inside the proof modal, framed in a browser-window mock. Plain HTML, CSS and JavaScript, no build step.
 
-- **Hero** — headline, lede, two buttons and a four-cell stats strip.
+- **Hero** — word-by-word headline reveal, a 3D contact card with an orbit of tool badges, count-up stats and a scrolling tool marquee.
 - **Selected systems** — six verified case cards; clicking opens the proof modal with architecture, system flow, evidence notes, recorded walkthrough and screenshot gallery.
 - **Products & platforms** — MorrowDesk, the social-media MCP server suite, FlowCore Leads and Morrow Product Engine.
 - **How I work** — method steps plus the working set of tools.

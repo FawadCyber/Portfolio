@@ -9,15 +9,6 @@
   $$("[data-nav-close]").forEach((el) => el.addEventListener("click", () => setNav(false)));
   document.addEventListener("keydown", (event) => { if (event.key === "Escape") setNav(false); });
 
-  /* Reveal on scroll */
-  const revealItems = $$(".section-head, .card, .product, .skills, .contact-card");
-  revealItems.forEach((el) => el.classList.add("reveal"));
-  if ("IntersectionObserver" in window) {
-    const io = new IntersectionObserver((entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0.1 });
-    revealItems.forEach((el) => io.observe(el));
-    window.setTimeout(() => revealItems.forEach((el) => { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add("in"); }), 1200);
-  } else revealItems.forEach((el) => el.classList.add("in"));
-
   /* Latest on GitHub: public, non-fork, non-archived repos, newest push first.
      To hide a repo, add the topic "hide-from-portfolio" to it on GitHub. */
   const reposEl = $("#repos");
