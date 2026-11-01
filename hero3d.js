@@ -10,6 +10,7 @@ const canvas = document.getElementById("v3d");
 const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const small = window.matchMedia("(max-width: 720px)").matches;
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+const lite = window.matchMedia("(hover: none), (pointer: coarse), (max-width: 900px)").matches || (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4;
 
 function webglOK() {
   try { const c = document.createElement("canvas"); return !!(c.getContext("webgl2") || c.getContext("webgl")); } catch { return false; }
@@ -19,7 +20,7 @@ if (host && canvas && webglOK()) init();
 
 function init() {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: !small, alpha: true, powerPreference: "high-performance" });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, small ? 1.5 : 1.75));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lite ? 1.25 : 1.75));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
@@ -47,7 +48,7 @@ function init() {
 
   const logo = new THREE.Group();
   const halves = [new THREE.Group(), new THREE.Group()];
-  const extrude = { depth: 110, bevelEnabled: true, bevelThickness: 22, bevelSize: 14, bevelSegments: small ? 3 : 6, curveSegments: small ? 8 : 16 };
+  const extrude = { depth: 110, bevelEnabled: true, bevelThickness: 22, bevelSize: 14, bevelSegments: lite ? 2 : 6, curveSegments: lite ? 6 : 16 };
   data.paths.forEach((p, i) => {
     SVGLoader.createShapes(p).forEach((shape) => {
       const geo = new THREE.ExtrudeGeometry(shape, extrude);
@@ -67,7 +68,7 @@ function init() {
   scene.add(logo);
 
   // Gold dust.
-  const COUNT = small ? 260 : 700;
+  const COUNT = lite ? 140 : 700;
   const pos = new Float32Array(COUNT * 3);
   const seed = new Float32Array(COUNT);
   for (let i = 0; i < COUNT; i++) {
@@ -120,6 +121,7 @@ function init() {
   function frame(now) {
     raf = 0;
     if (!running) return;
+    if (lite && now - last < 32) { if (visible) raf = requestAnimationFrame(frame); return; } // ~30 fps on phones
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
     const t = (now - t0) / 1000;
     const intro = reduce ? 1 : ease(Math.min(1, t / 1.8));

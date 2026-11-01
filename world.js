@@ -9,6 +9,7 @@ const canvas = document.getElementById("world");
 const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const small = window.matchMedia("(max-width: 720px)").matches;
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+const lite = window.matchMedia("(hover: none), (pointer: coarse), (max-width: 900px)").matches || (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4;
 
 function webglOK() {
   try { const c = document.createElement("canvas"); return !!(c.getContext("webgl2") || c.getContext("webgl")); } catch { return false; }
@@ -16,9 +17,9 @@ function webglOK() {
 if (canvas && webglOK()) init();
 
 function init() {
-  const N = small ? 2400 : 6500;
+  const N = lite ? 900 : 6500;
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: true, powerPreference: "high-performance" });
-  const dpr = Math.min(window.devicePixelRatio || 1, small ? 1.3 : 1.6);
+  const dpr = Math.min(window.devicePixelRatio || 1, lite ? 1 : 1.6);
   renderer.setPixelRatio(dpr);
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
@@ -92,7 +93,7 @@ function init() {
 
   const mat = new THREE.ShaderMaterial({
     transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
-    uniforms: { uTime: { value: 0 }, uSize: { value: small ? 70 : 78 }, uPixelRatio: { value: dpr }, uFade: { value: 1 } },
+    uniforms: { uTime: { value: 0 }, uSize: { value: lite ? 46 : 78 }, uPixelRatio: { value: dpr }, uFade: { value: 1 } },
     vertexShader: `
       attribute float aSeed; uniform float uTime; uniform float uSize; uniform float uPixelRatio;
       varying float vSeed; varying float vDepth;
@@ -164,8 +165,14 @@ function init() {
 
   // ---------- Loop (stops while the tab is hidden) ----------
   let raf = 0, running = true, last = performance.now(), time = 0, fSmooth = 0;
+  const heroEl = document.querySelector(".hero");
   function frame(now) {
     raf = 0; if (!running) return;
+    if (lite) {
+      // Phones: ~30 fps, and skip rendering while the hero (with its own 3D logo) fills the screen.
+      const heroBottom = heroEl ? heroEl.getBoundingClientRect().bottom : 0;
+      if (now - last < 32 || heroBottom > window.innerHeight * 0.5) { raf = requestAnimationFrame(frame); if (now - last >= 32) last = now; return; }
+    }
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
     if (!reduce) time += dt;
 

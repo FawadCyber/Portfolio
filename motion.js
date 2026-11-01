@@ -5,6 +5,7 @@ import { animate, inView, scroll, stagger } from "https://cdn.jsdelivr.net/npm/m
 
 const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+const lite = window.matchMedia("(hover: none), (pointer: coarse), (max-width: 900px)").matches || (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4;
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const spring = { type: "spring", stiffness: 260, damping: 26 };
@@ -12,7 +13,7 @@ const spring = { type: "spring", stiffness: 260, damping: 26 };
 /* Hero video: loads after first paint, phones get the 720p file, skipped for reduced motion or data saver. */
 const hv = $("[data-hero-video]");
 const saveData = navigator.connection && navigator.connection.saveData;
-if (hv && !reduce && !saveData) {
+if (hv && !reduce && !saveData && !lite) {
   const src = $("source", hv);
   src.src = window.matchMedia("(max-width: 720px)").matches ? src.dataset.srcMobile : src.dataset.srcDesktop;
   hv.load();
@@ -180,7 +181,11 @@ if (cinema && cv) {
     };
     if (lite) {
       // Phones and touch devices: play a light looping version instead of scrubbing.
-      cv.src = cv.dataset.loop; cv.loop = true; cv.autoplay = true; cv.preload = "metadata";
+      const portrait = window.matchMedia("(orientation: portrait)").matches;
+      cv.src = portrait && cv.dataset.loopVertical ? cv.dataset.loopVertical : cv.dataset.loop;
+      if (portrait && cv.dataset.posterVertical) cv.poster = cv.dataset.posterVertical;
+      cv.classList.toggle("is-vertical", portrait && !!cv.dataset.loopVertical);
+      cv.loop = true; cv.autoplay = true; cv.preload = "metadata";
       inView(cinema, () => { cv.play().catch(() => {}); return () => cv.pause(); });
     } else {
       // Load the scrub file only when the visitor gets close to the section.
@@ -227,20 +232,20 @@ if (!reduce) {
   const hero = $(".hero");
   const heroCopy = $(".hero-copy");
   const heroVid = $(".hero-video video");
-  if (hero && heroCopy) scroll(animate(heroCopy, { y: [0, -90], opacity: [1, 0.15] }, { ease: "linear" }), { target: hero, offset: ["start start", "end start"] });
-  if (hero && heroVid) scroll(animate(heroVid, { y: [0, 120], scale: [1, 1.12] }, { ease: "linear" }), { target: hero, offset: ["start start", "end start"] });
+  if (!lite && hero && heroCopy) scroll(animate(heroCopy, { y: [0, -90], opacity: [1, 0.15] }, { ease: "linear" }), { target: hero, offset: ["start start", "end start"] });
+  if (!lite && hero && heroVid) scroll(animate(heroVid, { y: [0, 120], scale: [1, 1.12] }, { ease: "linear" }), { target: hero, offset: ["start start", "end start"] });
 
   /* Systems grid rises from a steep 3D angle, tied to scroll */
   const grid = $("#work .cards");
   const work = $("#work");
-  if (grid && work) {
+  if (!lite && grid && work) {
     work.style.perspective = "1400px";
     scroll(animate(grid, { rotateX: [26, 0], y: [90, 0], scale: [0.94, 1] }, { ease: "linear" }), { target: grid, offset: ["start end", "start 35%"] });
   }
 
   /* Products tilt in from alternating sides */
   const prods = $(".products");
-  if (prods) {
+  if (!lite && prods) {
     prods.style.perspective = "1200px";
     $$(".product", prods).forEach((p, i) => {
       scroll(animate(p, { rotateY: [i % 2 ? -18 : 18, 0], x: [i % 2 ? 60 : -60, 0] }, { ease: "linear" }), { target: p, offset: ["start end", "start 55%"] });

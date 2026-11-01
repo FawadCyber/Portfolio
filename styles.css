@@ -299,6 +299,11 @@ html:has(.case-dialog[open]) { overflow: hidden; }
   .stats { grid-template-columns: 1fr 1fr; }
   .repos { grid-template-columns: 1fr 1fr; }
 }
+@media (hover: none), (pointer: coarse), (max-width: 900px) {
+  .card, .product, .repo, .skills { -webkit-backdrop-filter: none; backdrop-filter: none; background: linear-gradient(180deg, rgba(28, 25, 23, .92), rgba(17, 15, 13, .94)); }
+  .hero-video { display: none; }
+  .cinema-video.is-vertical { transform: none; object-position: 50% 30%; }
+}
 @media (max-width: 640px) {
   .hero-3d { height: 340px; margin-top: -1rem; }
   .hero-3d-hint { display: none; }
