@@ -20,7 +20,7 @@ if (host && canvas && webglOK()) init();
 
 function init() {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: !small, alpha: true, powerPreference: "high-performance" });
-  let pixelRatio = Math.min(window.devicePixelRatio || 1, lite ? 1.25 : 1.75), perfAcc = 0, perfN = 0;
+  let pixelRatio = Math.min(window.devicePixelRatio || 1, lite ? 1.25 : 1.75);
   renderer.setPixelRatio(pixelRatio);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -124,12 +124,6 @@ function init() {
     if (!running) return;
     if (lite && now - last < 32) { if (visible) raf = requestAnimationFrame(frame); return; } // ~30 fps on phones
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
-    // Adaptive quality: every ~1.5s, if the average frame is slower than ~45fps, render at a lower resolution.
-    perfAcc += dt; perfN++;
-    if (perfN >= 90) {
-      const avg = perfAcc / perfN; perfAcc = 0; perfN = 0;
-      if (avg > 1 / 45 && pixelRatio > 1) { pixelRatio = Math.max(1, pixelRatio - 0.25); renderer.setPixelRatio(pixelRatio); resize(); }
-    }
     const t = (now - t0) / 1000;
     const intro = reduce ? 1 : ease(Math.min(1, t / 1.8));
     halves[0].position.x = (1 - intro) * -900; halves[1].position.x = (1 - intro) * 900;

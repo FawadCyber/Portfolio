@@ -20,7 +20,7 @@ function init() {
   const N = lite ? 900 : 6500;
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: true, powerPreference: "high-performance" });
   const dpr = Math.min(window.devicePixelRatio || 1, lite ? 1 : 1.6);
-  let pixelRatio = dpr, perfAcc = 0, perfN = 0;
+  let pixelRatio = dpr;
   renderer.setPixelRatio(pixelRatio);
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
@@ -176,12 +176,6 @@ function init() {
       if (now - last < 32 || heroBottom > window.innerHeight * 0.5) { raf = requestAnimationFrame(frame); if (now - last >= 32) last = now; return; }
     }
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
-    // Adaptive quality: every ~1.5s, if the average frame is slower than ~45fps, render at a lower resolution.
-    perfAcc += dt; perfN++;
-    if (perfN >= 90) {
-      const avg = perfAcc / perfN; perfAcc = 0; perfN = 0;
-      if (avg > 1 / 45 && pixelRatio > 1) { pixelRatio = Math.max(1, pixelRatio - 0.25); renderer.setPixelRatio(pixelRatio); resize(); }
-    }
     if (!reduce) time += dt;
 
     const f = formationIndex();
