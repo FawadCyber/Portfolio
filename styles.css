@@ -46,6 +46,13 @@ h1, h2, h3, h4, p { margin: 0; }
   -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 20%, transparent 70%); mask-image: radial-gradient(ellipse at 50% 0%, #000 20%, transparent 70%); }
 .progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 60; background: var(--grad); transform-origin: 0 50%; transform: scaleX(0); }
 
+/* Whole-page WebGL particle world (fixed, behind all content) */
+#world { position: fixed; inset: 0; z-index: 0; width: 100vw; height: 100vh; height: 100lvh; pointer-events: none; opacity: 0; transition: opacity 1.5s var(--ease); }
+#world.ready { opacity: 1; }
+main, .footer, .topbar, .mobile-nav { position: relative; z-index: 1; }
+.topbar { position: sticky; z-index: 50; }
+.mobile-nav { z-index: 49; }
+
 /* Buttons */
 .btn { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: .5em; height: 2.95em; padding: 0 1.35em; border-radius: 999px; font-weight: 500; font-size: .95em; white-space: nowrap; transition: background .25s, box-shadow .25s, color .25s; will-change: transform; }
 .btn-dark { color: #1C1917; background: var(--grad); box-shadow: 0 8px 28px -12px rgba(217, 178, 111, .7), inset 0 1px 0 rgba(255,255,255,.45); }
@@ -183,7 +190,7 @@ h2 { font: 600 clamp(1.9rem, 3.6vw, 3rem)/1.05 var(--display); letter-spacing: -
 
 /* Cards with spotlight */
 .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1em; perspective: 1200px; }
-.card, .product, .repo, .skills { position: relative; overflow: hidden; border-radius: var(--radius); background: linear-gradient(180deg, rgba(28, 25, 23, .9), rgba(17, 15, 13, .9)); box-shadow: inset 0 0 0 1px var(--line); }
+.card, .product, .repo, .skills { position: relative; overflow: hidden; border-radius: var(--radius); background: linear-gradient(180deg, rgba(28, 25, 23, .78), rgba(17, 15, 13, .82)); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); box-shadow: inset 0 0 0 1px var(--line); }
 .card::after, .product::after, .repo::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .35s;
   background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 0%), rgba(217, 178, 111, .16), transparent 60%); }
 .card:hover::after, .product:hover::after, .repo:hover::after { opacity: 1; }
@@ -235,7 +242,7 @@ h2 { font: 600 clamp(1.9rem, 3.6vw, 3rem)/1.05 var(--display); letter-spacing: -
 .skill-row b { font-weight: 500; text-align: right; }
 
 .contact-card { position: relative; overflow: hidden; padding: clamp(2.5rem, 6vw, 5rem); border-radius: calc(var(--radius) + 6px); text-align: center;
-  background: radial-gradient(80% 120% at 50% 0%, rgba(217, 178, 111, .35), transparent 60%), radial-gradient(60% 80% at 100% 100%, rgba(181, 135, 74, .18), transparent 60%), #120f0d;
+  background: radial-gradient(80% 120% at 50% 0%, rgba(217, 178, 111, .16), transparent 60%), rgba(18, 15, 13, .38);
   box-shadow: inset 0 0 0 1px var(--line-2); }
 .contact-card h2 { margin: .5em auto .2em; max-width: 16ch; font-size: clamp(2.2rem, 5vw, 4rem); }
 .contact-card .hero-actions { justify-content: center; }
