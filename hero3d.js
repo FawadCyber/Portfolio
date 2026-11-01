@@ -62,7 +62,7 @@ function init() {
   const centre = box.getCenter(new THREE.Vector3());
   halves.forEach((h) => h.children.forEach((m) => m.geometry.translate(-centre.x, -centre.y, -centre.z)));
   const size = box.getSize(new THREE.Vector3());
-  const scale = 3.6 / Math.max(size.x, size.y);
+  const scale = 3.0 / Math.max(size.x, size.y);
   logo.scale.set(scale, -scale, scale);
   scene.add(logo);
 
