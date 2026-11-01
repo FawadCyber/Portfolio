@@ -160,3 +160,108 @@ setTimeout(() => {
     else inView(el, () => { setTimeout(() => forceShow(el), 3000); });
   });
 }, 3000);
+
+/* ---------- Scroll cinema: scrub the 3D logo film with scroll ---------- */
+const cinema = $(".cinema");
+const cv = $("[data-cinema]");
+if (cinema && cv) {
+  const lines = $$(".cinema-line", cinema);
+  const pbar = $(".cinema-progress i", cinema);
+  const lite = window.matchMedia("(max-width: 720px)").matches || !finePointer;
+  if (reduce) {
+    document.documentElement.classList.add("no-motion");
+  } else {
+    let duration = 0, target = 0, current = 0, raf = 0, ready = false;
+    const tick = () => {
+      current += (target - current) * 0.16;
+      if (Math.abs(target - current) < 0.004) current = target;
+      if (ready && Math.abs(cv.currentTime - current) > 0.02) cv.currentTime = current;
+      raf = current !== target ? requestAnimationFrame(tick) : 0;
+    };
+    if (lite) {
+      // Phones and touch devices: play a light looping version instead of scrubbing.
+      cv.src = cv.dataset.loop; cv.loop = true; cv.autoplay = true; cv.preload = "metadata";
+      inView(cinema, () => { cv.play().catch(() => {}); return () => cv.pause(); });
+    } else {
+      // Load the scrub file only when the visitor gets close to the section.
+      inView(cinema, () => {
+        if (ready || cv.src) return;
+        cv.src = cv.dataset.scrub; cv.preload = "auto";
+        cv.addEventListener("loadedmetadata", () => { duration = cv.duration; ready = true; }, { once: true });
+      }, { margin: "100% 0px 100% 0px" });
+    }
+    scroll((p) => {
+      if (pbar) pbar.style.transform = `scaleX(${p})`;
+      if (!lite && ready) { target = p * (duration - 0.05); if (!raf) raf = requestAnimationFrame(tick); }
+      const n = lines.length;
+      lines.forEach((line, i) => {
+        const d = (p - (i + 0.5) / n) * n;             // 0 when this line is centred in its slot
+        const o = Math.max(0, 1 - Math.abs(d) * 1.9);
+        line.style.opacity = o.toFixed(3);
+        line.style.transform = `translateY(${(-d * 70).toFixed(1)}px) scale(${(0.94 + o * 0.06).toFixed(3)})`;
+      });
+    }, { target: cinema, offset: ["start start", "end end"] });
+  }
+}
+
+if (!reduce) {
+  /* 3D letter flip on section headings */
+  $$(".section-head h2").forEach((h2) => {
+    const words = h2.textContent.trim().split(/\s+/);
+    h2.textContent = "";
+    words.forEach((w, wi) => {
+      const ws = document.createElement("span");
+      ws.style.display = "inline-block"; ws.style.whiteSpace = "nowrap";
+      [...w].forEach((ch) => { const s = document.createElement("span"); s.className = "char"; s.textContent = ch; ws.append(s); });
+      h2.append(ws);
+      if (wi < words.length - 1) h2.append(" ");
+    });
+    const chars = $$(".char", h2);
+    chars.forEach((s) => { s.style.opacity = "0"; });
+    inView(h2, () => {
+      animate(chars, { opacity: [0, 1], rotateX: [-90, 0], y: [20, 0] }, { duration: 0.6, delay: stagger(0.018), ease: [0.2, 0.8, 0.2, 1] });
+    }, { margin: "0px 0px -10% 0px" });
+  });
+
+  /* Hero parallax: copy lifts away and the video drifts as you scroll out of the hero */
+  const hero = $(".hero");
+  const heroCopy = $(".hero-copy");
+  const heroVid = $(".hero-video video");
+  if (hero && heroCopy) scroll(animate(heroCopy, { y: [0, -90], opacity: [1, 0.15] }, { ease: "linear" }), { target: hero, offset: ["start start", "end start"] });
+  if (hero && heroVid) scroll(animate(heroVid, { y: [0, 120], scale: [1, 1.12] }, { ease: "linear" }), { target: hero, offset: ["start start", "end start"] });
+
+  /* Systems grid rises from a steep 3D angle, tied to scroll */
+  const grid = $("#work .cards");
+  const work = $("#work");
+  if (grid && work) {
+    work.style.perspective = "1400px";
+    scroll(animate(grid, { rotateX: [26, 0], y: [90, 0], scale: [0.94, 1] }, { ease: "linear" }), { target: grid, offset: ["start end", "start 35%"] });
+  }
+
+  /* Products tilt in from alternating sides */
+  const prods = $(".products");
+  if (prods) {
+    prods.style.perspective = "1200px";
+    $$(".product", prods).forEach((p, i) => {
+      scroll(animate(p, { rotateY: [i % 2 ? -18 : 18, 0], x: [i % 2 ? 60 : -60, 0] }, { ease: "linear" }), { target: p, offset: ["start end", "start 55%"] });
+    });
+  }
+}
+
+/* Gold cursor ring that follows the pointer and grows over clickable things */
+const ring = $(".cursor");
+if (ring && finePointer && !reduce) {
+  let tx = 0, ty = 0, x = 0, y = 0, raf = 0;
+  const loop = () => {
+    x += (tx - x) * 0.22; y += (ty - y) * 0.22;
+    ring.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
+    raf = Math.abs(tx - x) + Math.abs(ty - y) > 0.3 ? requestAnimationFrame(loop) : 0;
+  };
+  window.addEventListener("pointermove", (e) => {
+    tx = e.clientX; ty = e.clientY;
+    ring.classList.add("on");
+    ring.classList.toggle("hover", !!e.target.closest("a, button, .card, .repo, .product"));
+    if (!raf) raf = requestAnimationFrame(loop);
+  }, { passive: true });
+  document.addEventListener("pointerleave", () => ring.classList.remove("on"));
+}

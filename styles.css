@@ -130,6 +130,40 @@ h1 em .word { background: var(--grad); background-size: var(--gw, 100%) 100%; -w
 @keyframes slide { to { transform: translateX(-50%); } }
 .marquee-track span { padding: .55em 1.05em; border-radius: 999px; background: rgba(255,255,255,.03); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink-2); font: 500 .8rem var(--mono); white-space: nowrap; }
 
+/* Two-row 3D marquee */
+.marquee-3d { perspective: 900px; margin-top: 1rem; }
+.marquee-3d .marquee { transform: rotateX(18deg); transform-origin: 50% 0; padding: .7em 0; }
+.marquee-3d .marquee-rev { transform: rotateX(18deg) translateZ(-40px); opacity: .7; }
+.marquee-rev .marquee-track { animation-direction: reverse; animation-duration: 46s; }
+.marquee-track span:hover { color: var(--gold); box-shadow: inset 0 0 0 1px rgba(217, 178, 111, .45); }
+
+/* Scroll cinema: pinned full-screen section; scroll scrubs the 3D logo film. */
+.cinema { position: relative; height: 320vh; margin: 2rem 0 0; }
+.cinema-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: grid; align-items: center; }
+.cinema-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: var(--bg); transform: translateX(13%) scale(.92); }
+.cinema-shade { position: absolute; inset: 0; background:
+  linear-gradient(180deg, var(--bg) 0%, rgba(12,10,9,0) 18%, rgba(12,10,9,0) 78%, var(--bg) 100%),
+  linear-gradient(90deg, rgba(12,10,9,.85) 0%, rgba(12,10,9,.35) 45%, rgba(12,10,9,0) 70%); }
+.cinema-lines { position: relative; z-index: 1; display: grid; }
+.cinema-kicker { font: 500 .78rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.4rem; }
+.cinema-line { grid-area: 2 / 1; max-width: 12ch; font-size: clamp(2.6rem, 7vw, 6.4rem); line-height: .98; letter-spacing: -.045em; opacity: 0; transform: translateY(40px); will-change: transform, opacity; }
+.cinema-line em { font-style: normal; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.cinema-progress { position: absolute; left: 50%; bottom: 6vh; width: min(240px, 50vw); height: 2px; transform: translateX(-50%); background: var(--line-2); border-radius: 2px; overflow: hidden; }
+.cinema-progress i { position: absolute; inset: 0; background: var(--grad); transform-origin: 0 50%; transform: scaleX(0); }
+.no-motion .cinema { height: auto; }
+.no-motion .cinema-sticky { position: relative; height: 80vh; }
+.no-motion .cinema-line[data-step="0"] { opacity: 1; transform: none; }
+
+/* 3D letter flip for section headings */
+.char { display: inline-block; transform-origin: 50% 100%; backface-visibility: hidden; }
+.section-head h2 { perspective: 600px; }
+
+/* Gold cursor ring (fine pointers only) */
+.cursor { position: fixed; left: 0; top: 0; z-index: 80; width: 34px; height: 34px; margin: -17px 0 0 -17px; border-radius: 50%; border: 1px solid rgba(217, 178, 111, .7); pointer-events: none; opacity: 0; transition: width .25s var(--ease), height .25s var(--ease), margin .25s var(--ease), background .25s, opacity .3s; will-change: transform; }
+.cursor.on { opacity: 1; }
+.cursor.hover { width: 64px; height: 64px; margin: -32px 0 0 -32px; background: rgba(217, 178, 111, .12); border-color: rgba(241, 220, 168, .9); }
+@media (hover: none), (pointer: coarse) { .cursor { display: none; } }
+
 /* Sections */
 .section { padding: clamp(3rem, 7vw, 6rem) 0; }
 .section-head { display: flex; justify-content: space-between; align-items: end; gap: 2em; margin-bottom: 2.2em; }
@@ -246,6 +280,11 @@ html:has(.case-dialog[open]) { overflow: hidden; }
   .repos { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 640px) {
+  .cinema { height: 240vh; }
+  .cinema-video { transform: translateY(-12%) scale(1.05); }
+  .cinema-shade { background: linear-gradient(180deg, var(--bg) 0%, rgba(12,10,9,.25) 25%, rgba(12,10,9,.55) 70%, var(--bg) 100%); }
+  .cinema-lines { align-self: end; padding-bottom: 16vh; }
+  .marquee-3d .marquee { transform: rotateX(12deg); }
   .hero-video video { opacity: .4; }
   .hero-video::after { background: linear-gradient(180deg, rgba(12,10,9,.55), rgba(12,10,9,.85)); }
   .topbar { top: 8px; margin-top: 8px; }
@@ -274,6 +313,7 @@ html:has(.case-dialog[open]) { overflow: hidden; }
   .case-details, .case-gallery-grid { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
+  .cursor { display: none; }
   html { scroll-behavior: auto; }
   .orbit, .badge span, .marquee-track, .dot { animation: none; }
   .progress { display: none; }
