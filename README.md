@@ -25,6 +25,14 @@ A clean, premium "systems" layout: warm off-white background, one green accent, 
 
 The public package contains 29 proof files. Buyer-identifying screenshots, raw n8n exports, webhook IDs, and credential references are intentionally excluded from the deployable site.
 
+## Case study pages and SEO
+
+Each case study has its own static page (for example `pinterest-mcp-server/`) so search engines can index it. They are generated from `workflowCases` in `script.js`, along with `sitemap.xml`. After editing case data, run:
+
+```bash
+node tools/build-case-pages.js <cache-version> <yyyy-mm-dd>
+```
+
 ## Editing
 
 - Case-study content lives in `script.js` under `workflowCases`. Each key matches a `data-project` attribute on a work-list row in `index.html`. The cursor preview images are the `<img>` tags inside `.work-float-images`, in the same order as the rows.

@@ -245,7 +245,12 @@
     if (caseDialog?.open && typeof caseDialog.close === 'function') caseDialog.close();
     else caseDialog?.removeAttribute('open');
   };
-  $$('[data-project]').forEach((card) => card.addEventListener('click', () => openWorkflowCase(card.dataset.project)));
+  $$('[data-project]').forEach((card) => card.addEventListener('click', (event) => {
+    // Let ctrl/cmd/shift/middle clicks open the real page; a normal click opens the pop-up.
+    if (event.ctrlKey || event.metaKey || event.shiftKey || event.button !== 0) return;
+    event.preventDefault();
+    openWorkflowCase(card.dataset.project);
+  }));
   $('[data-case-close]')?.addEventListener('click', closeWorkflowCase);
   caseDialog?.addEventListener('click', (event) => {
     if (event.target === caseDialog) closeWorkflowCase();

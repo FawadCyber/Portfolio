@@ -28,7 +28,7 @@ if (bar && !reduce) scroll(animate(bar, { scaleX: [0, 1] }, { ease: "linear" }))
 
 if (!reduce) {
   /* TextEffect: headline words rise in with a blur, one after another. */
-  const h1 = $(".hero h1");
+  const h1 = $(".hero .hero-statement");
   if (h1) {
     const wrap = (node) => {
       [...node.childNodes].forEach((child) => {
